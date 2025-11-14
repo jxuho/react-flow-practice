@@ -40,7 +40,7 @@ export default function App() {
   );
   const onConnect = useCallback(
     // 두 노드 간에 새로운 연결이 생성될 때마다 호출된다
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
+    (params) => setEdges((edgesSnapshot) => addEdge({ ...params, type: 'step' }, edgesSnapshot)),
     // addEdge 유틸리티 함수를 사용하여 새 에지를 생성하고 에지 배열을 업데이트할 수 있다.
     []
   );
@@ -64,9 +64,28 @@ export default function App() {
     [setMenu]
   );
 
+  const onEdgeContextMenu = useCallback((event, edge) => {
+    event.preventDefault();
+
+    const pane = ref.current.getBoundingClientRect();
+    setMenu({
+      id: edge.id,
+      type: "edge",
+      top: event.clientY < pane.height - 200 ? event.clientY : undefined,
+      left: event.clientX < pane.width - 200 ? event.clientX : undefined,
+      right:
+        event.clientX >= pane.width - 200
+          ? pane.width - event.clientX
+          : undefined,
+      bottom:
+        event.clientY >= pane.height - 200
+          ? pane.height - event.clientY
+          : undefined,
+    });
+  }, []);
+
   // Close the context menu if it's open whenever the window is clicked.
   const onPaneClick = useCallback(() => {
-    console.log('onPaneClick');
     setMenu(null);
   }, [setMenu]);
 
@@ -76,6 +95,7 @@ export default function App() {
     applicationNode: ApplicationNode,
     resizableNode: ResizableNode,
   };
+
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -88,6 +108,7 @@ export default function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeContextMenu={onNodeContextMenu}
+        onEdgeContextMenu={onEdgeContextMenu}
         onPaneClick={onPaneClick}
         fitView
       >
