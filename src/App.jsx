@@ -16,6 +16,7 @@ import ApplicationNode from "./components/nodes/ApplicationNode";
 import ResizableNode from "./components/nodes/ResizableNode";
 import ContextMenu from "./components/ContextMenu/ContextMenu";
 import { initialNodes, initialEdges } from "./data/initialElements";
+import StepEdge from "./components/edges/StepEdge";
 
 export default function App() {
   const [nodes, setNodes] = useState(initialNodes);
@@ -40,11 +41,22 @@ export default function App() {
   );
   const onConnect = useCallback(
     // 두 노드 간에 새로운 연결이 생성될 때마다 호출된다
-    (params) => setEdges((edgesSnapshot) => addEdge({ ...params, type: 'step' }, edgesSnapshot)),
+    (params) => {
+      //
+      const newEdge = {
+        ...params,
+        type: "step",
+        source: params.source,
+        target: params.target,
+      };
+      //
+      setEdges((edgesSnapshot) =>
+        addEdge(newEdge, edgesSnapshot)
+      );
+    },
     // addEdge 유틸리티 함수를 사용하여 새 에지를 생성하고 에지 배열을 업데이트할 수 있다.
     []
   );
-
   const onNodeContextMenu = useCallback(
     (event, node) => {
       // Prevent native context menu from showing
@@ -63,7 +75,6 @@ export default function App() {
     },
     [setMenu]
   );
-
   const onEdgeContextMenu = useCallback((event, edge) => {
     event.preventDefault();
 
@@ -96,7 +107,6 @@ export default function App() {
     resizableNode: ResizableNode,
   };
 
-
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
       <ReactFlow
@@ -110,6 +120,7 @@ export default function App() {
         onNodeContextMenu={onNodeContextMenu}
         onEdgeContextMenu={onEdgeContextMenu}
         onPaneClick={onPaneClick}
+        connectionMode="loose"
         fitView
       >
         {/* <MiniMap/> */}

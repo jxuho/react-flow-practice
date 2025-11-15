@@ -12,8 +12,8 @@ const ApplicationNode = ({ data, selected }) => {
       <div className="flex items-center justify-center p-2.5 h-full">
         {data.label}
       </div>
-      <Handle type="source" position={Position.Top} />
-      <Handle type="target" position={Position.Bottom} />
+      <Handle type="source" position={Position.Top} id="top-source"/>
+      <Handle type="source" position={Position.Left} id="left-source"/>
     </div>
   );
 };
