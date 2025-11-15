@@ -39,24 +39,23 @@ export default function App() {
       setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     []
   );
-  const onConnect = useCallback(
-    // 두 노드 간에 새로운 연결이 생성될 때마다 호출된다
-    (params) => {
-      //
-      const newEdge = {
-        ...params,
-        type: "step",
-        source: params.source,
-        target: params.target,
-      };
-      //
-      setEdges((edgesSnapshot) =>
-        addEdge(newEdge, edgesSnapshot)
-      );
-    },
-    // addEdge 유틸리티 함수를 사용하여 새 에지를 생성하고 에지 배열을 업데이트할 수 있다.
-    []
-  );
+const onConnect = useCallback(
+  (params) => {
+    const newEdge = {
+      ...params,
+      type: "step", // StepEdge를 사용하고 계시네요
+      source: params.source,
+      target: params.target,
+      // 🎯 여기에 화살표 속성을 추가합니다.
+      markerEnd: {
+        type: 'arrowclosed', // 'arrowclosed' 또는 'arrow' 사용
+        color: '#808080', // 화살표 색상 (선 색상과 다르게 설정 가능)
+      },
+    };
+    setEdges((edgesSnapshot) => addEdge(newEdge, edgesSnapshot));
+  },
+  []
+);
   const onNodeContextMenu = useCallback(
     (event, node) => {
       // Prevent native context menu from showing
