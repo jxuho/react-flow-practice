@@ -3,7 +3,7 @@ import { Handle, Position, NodeResizer } from '@xyflow/react';
 
 const ResizableNodeSelected = ({ data, selected }) => {
   return (
-    <>
+    <div className='relative border w-full h-full bg-gray-300'>
       <NodeResizer
         color="#ff0071"
         isVisible={selected}
@@ -13,7 +13,7 @@ const ResizableNodeSelected = ({ data, selected }) => {
       <Handle type="target" position={Position.Left} />
       <div style={{ padding: 10 }}>{data.label}</div>
       <Handle type="source" position={Position.Right} />
-    </>
+    </div>
   );
 };
 

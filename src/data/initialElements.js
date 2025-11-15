@@ -25,6 +25,33 @@ export const initialNodes = [
     position: { x: -300, y: 0 },
     data: { label: "resizableNode" },
   },
+  {
+    id: 'A',
+    type: 'securityRealm',
+    data: { label: null },
+    position: { x: 0, y: 0 },
+    style: {
+      width: 170,
+      height: 140,
+    },
+  },
+  {
+    id: 'B',
+    type: 'applicationNode',
+    data: { label: 'child node 1' },
+    position: { x: 10, y: 10 },
+    parentId: 'A',
+    extent: 'parent',
+  },
+  {
+    id: 'C',
+    type: 'applicationNode',
+    data: { label: 'child node 2' },
+    position: { x: 10, y: 90 },
+    parentId: 'A',
+    extent: 'parent',
+  },
+
 ];
 
 export const initialEdges = [{ id: "n2-n3", source: "n2", target: "n3", type: "step" }];

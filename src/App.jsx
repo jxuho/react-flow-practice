@@ -17,6 +17,7 @@ import ResizableNode from "./components/nodes/ResizableNode";
 import ContextMenu from "./components/ContextMenu/ContextMenu";
 import { initialNodes, initialEdges } from "./data/initialElements";
 import StepEdge from "./components/edges/StepEdge";
+import SecurityRealm from "./components/nodes/SecurityRealm";
 
 export default function App() {
   const [nodes, setNodes] = useState(initialNodes);
@@ -104,6 +105,7 @@ const onConnect = useCallback(
     dataProviderNode: DataProviderNode,
     applicationNode: ApplicationNode,
     resizableNode: ResizableNode,
+    securityRealm: SecurityRealm
   };
 
   return (
